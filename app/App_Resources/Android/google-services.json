@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "931977909611",
+    "firebase_url": "https://froppings-dafe4.firebaseio.com",
+    "project_id": "froppings-dafe4",
+    "storage_bucket": "froppings-dafe4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:931977909611:android:c8d035f7b9b1e897",
+        "android_client_info": {
+          "package_name": "org.nativescript.Froppings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "931977909611-q867150d7esjjuprief6k7mnl76jkoj0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.nativescript.Froppings",
+            "certificate_hash": "01526e99fcfe4687e43ab4b5813a4585238e3869"
+          }
+        },
+        {
+          "client_id": "931977909611-9r3ovpndvlbbsfqr8lr524phr8ihvarj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD07fOXZJl7d3OCaEFN5JjmLBn0jaY8ewk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "931977909611-spu613diq8fv171h1kasjr6fa0o2dnbn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.nativescript.Froppings"
+              }
+            },
+            {
+              "client_id": "931977909611-9r3ovpndvlbbsfqr8lr524phr8ihvarj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

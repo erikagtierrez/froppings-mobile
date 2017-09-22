@@ -1,0 +1,23 @@
+<Page backgroundSpanUnderStatusBar="false">
+    <StackLayout orientation="vertical" class="bgHeader ">
+        <CardView class="cardStyle" margin="70 20" elevation="50" radius="1">
+            <StackLayout class="form">
+                <Image src="~/assets/froppings.png" class="imgLogo" stretch="aspectFit"></Image>
+                <TextField class="text-field" hint="Correo Electronico" [(ngModel)]="email" autocapitalizationType="none" keyboardType="email" required></TextField>
+                <label class="label text-center" *ngIf="!valid" [text]="validText" ></label>                
+                 <StackLayout orientation="horizontal" horizontalAlignment="center" margin="0 17">
+                    <TextField class="text-field" hint="Contraseña" id="password" secure="true" [(ngModel)]="pass" autocapitalizationType="none" required></TextField>
+                    <Label class="fa socialButton" (tap)="seePassword()" [text]="'\uf06e'"></Label>
+                 </StackLayout>
+                <label class="label text-center" text="¿Olvidaste tu contraseña?"></label>
+                <Button text="Iniciar sesión" (tap)="login()"></Button>
+                <label class="label text-center" text="Conecta con:"></label>
+                <StackLayout orientation="horizontal" horizontalAlignment="center">
+                        <Button [text]="'\uf09a'" class="fa socialButton" (tap)="fbLogin()" ></Button>                
+                        <Button [text]="'\uf1a0'" class="fa socialButton" (tap)="googleLogin()"></Button>                
+                </StackLayout>
+                <label class="label text-center" text="¿No estás registrado?"></label>                
+            </StackLayout>
+        </CardView>
+    </StackLayout>
+</Page>
