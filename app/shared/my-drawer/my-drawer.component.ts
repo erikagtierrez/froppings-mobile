@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { RouterExtensions } from "nativescript-angular/router";
 import { ItemEventData } from "ui/list-view";
-
+import firebase = require("nativescript-plugin-firebase");
+import { SecureStorage } from "nativescript-secure-storage";
 /* ***********************************************************
 * Keep data that is displayed in your app drawer in the MyDrawer component class.
 * Add new data objects that you want to display in the drawer here in the form of properties.
@@ -19,11 +20,17 @@ export class MyDrawerComponent implements OnInit {
     * You can check how it is used in the "isPageSelected" function below.
     *************************************************************/
     @Input() selectedPage: string;
-
     private _navigationItems: Array<any>;
-
+    public user:any;
     constructor(private routerExtensions: RouterExtensions) {
-
+        let secureStorage = new SecureStorage();
+        this.user=secureStorage.get({
+            key: "user"
+          }).then(value => {
+              console.log("Got value: " + value)
+              this.user=JSON.parse(value)
+            });
+          
     }
 
     /* ***********************************************************
@@ -40,28 +47,34 @@ export class MyDrawerComponent implements OnInit {
                 icon: "\uf015"
             },
             {
-                title: "Browse",
-                name: "browse",
-                route: "/browse",
-                icon: "\uf1ea"
+                title: "Productos",
+                name: "products",
+                route: "/products",
+                icon: "\uf009"
             },
             {
-                title: "Search",
-                name: "search",
-                route: "/search",
-                icon: "\uf002"
+                title: "Detalles",
+                name: "detalles",
+                route: "/productdetails",
+                icon: "\uf009"
             },
             {
-                title: "Featured",
-                name: "featured",
-                route: "/featured",
-                icon: "\uf005"
+                title: "Promociones",
+                name: "promotions",
+                route: "/promotions",
+                icon: "\uf145"
             },
             {
-                title: "Settings",
+                title: "Perfil",
+                name: "profile",
+                route: "/profile",
+                icon: "\uf007"
+            },
+            {
+                title: "Cerrar sesión",
                 name: "settings",
                 route: "/settings",
-                icon: "\uf013"
+                icon: "\uf08b"
             }
         ];
     }

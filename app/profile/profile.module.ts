@@ -2,20 +2,20 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 
 import { SharedModule } from "../shared/shared.module";
-import { BrowseRoutingModule } from "./browse-routing.module";
-import { BrowseComponent } from "./browse.component";
+import { ProfileRoutingModule } from "./profile-routing.module";
+import { ProfileComponent } from "./profile.component";
 
 @NgModule({
     imports: [
         NativeScriptModule,
-        BrowseRoutingModule,
+        ProfileRoutingModule,
         SharedModule
     ],
     declarations: [
-        BrowseComponent
+        ProfileComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
     ]
 })
-export class BrowseModule { }
+export class ProfileModule { }

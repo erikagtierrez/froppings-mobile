@@ -5,6 +5,7 @@ import { LoginComponent } from "./login/login.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { SettingsModule } from "./settings/settings.module";
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
     imports: [
         NativeScriptModule,
         AppRoutingModule,
-        NativeScriptFormsModule
+        NativeScriptFormsModule,
+        SettingsModule
     ],
     declarations: [
         AppComponent,

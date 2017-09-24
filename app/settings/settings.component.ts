@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { DrawerTransitionBase, SlideInOnTopTransition } from "nativescript-telerik-ui/sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-telerik-ui/sidedrawer/angular";
+import { Router } from "@angular/router";
+import firebase = require("nativescript-plugin-firebase");
 
 @Component({
     selector: "Settings",
@@ -15,12 +17,18 @@ export class SettingsComponent implements OnInit {
     @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
 
     private _sideDrawerTransition: DrawerTransitionBase;
-
+     constructor(
+        private router: Router
+     ){
+         
+     }
     /* ***********************************************************
     * Use the sideDrawerTransition property to change the open/close animation of the drawer.
     *************************************************************/
     ngOnInit(): void {
         this._sideDrawerTransition = new SlideInOnTopTransition();
+        firebase.logout();
+        this.router.navigateByUrl("/login");
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {
