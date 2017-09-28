@@ -5,9 +5,9 @@ import { LoginComponent } from "./login/login.component";
 import { ProductsComponent } from "./products/products.component";
 
 const routes: Routes = [
-    { path: "", redirectTo: "/login", pathMatch: "full" },
+    { path: "", redirectTo: "/promotions", pathMatch: "full" },
     { path: "home", loadChildren: "./home/home.module#HomeModule" },
-    { path: "login", component: LoginComponent },        
+    { path: "login", loadChildren: "./login/login.module#LoginModule" },        
     { path: "products", loadChildren:  "./products/products.module#ProductsModule" },        
     { path: "productdetails", loadChildren: "./productDetails/productdetails.module#ProductDetailsModule" },
     { path: "promotions", loadChildren: "./promotions/promotions.module#PromotionsModule" },

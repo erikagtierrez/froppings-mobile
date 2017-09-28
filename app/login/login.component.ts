@@ -16,7 +16,8 @@ elementRegistryModule.registerElement(
 
 @Component({
   selector: "app-login",
-  templateUrl: `./login/login.component.html`
+  moduleId: module.id,  
+  templateUrl: "./login.component.html"
 })
 export class LoginComponent implements OnInit {
   passRegister: string = "";
@@ -32,6 +33,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private page: Page, private router: Router) {
     page.actionBarHidden = true;
+    console.log(this.router.url);
+    
   }
 
   ngOnInit() {

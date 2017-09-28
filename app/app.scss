@@ -2,7 +2,7 @@
 // other than “light”, switch the path to the alternative scheme,
 // for example '~nativescript-theme-core/scss/dark'.
 @import '~/nativescript-theme-core/css/core.light.css';
-@import '~nativescript-theme-core/scss/light';
+@import '~nativescript-theme-core/scss/grey';
 
 // Start custom common variables
 @import 'app-variables';
@@ -25,6 +25,7 @@
 }
 // Common page class
 .page-content {
+    background-color: #EEEEEE;
     .page-placeholder {
         color: $page-icon-color;
         font-size: $page-content-placeholder-font-size;
@@ -44,6 +45,10 @@
 //Action bar
 ActionBar .action-bar-title {
     horizontal-align: center;
+}
+
+.text-white{
+    color: white;
 }
 
 .cardStyle {
@@ -85,6 +90,11 @@ Button{
 
 Page {
     margin-top: -20px;
+    background-color: #EEEEEE;
+}
+
+.status-b{
+    margin-top: -20px;    
 }
 
 .form{
@@ -97,4 +107,30 @@ Page {
     color:white;
     margin-left: 5px;
     border-radius: 10px;
+}
+
+.pointsNumber{
+    background-color: #810d43;
+    color: white;
+    border-radius: 10;
+}
+.wrap{
+    white-space: normal;
+}
+
+.promoHeader{
+    background-color: $accent-light
+}
+
+.promoContent{
+    background-color: $night-light;
+}
+
+.promo{
+    border-radius: 10;
+}
+
+.circlePic{
+    border-radius: 50;
+    background-color: white;
 }

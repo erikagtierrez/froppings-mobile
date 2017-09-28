@@ -13,6 +13,9 @@ $sidedrawer-list-item-offset-left: 15;
 $sidedrawer-list-icon-offset: 5;
 $sidedrawer-list-icon-size: 20;
 
+.backgrounx{
+    background-color: $side-drawer-background;
+}
 
 .sidedrawer {
     &.sidedrawer-left {

@@ -24,7 +24,7 @@ $midnight-dark: #0F336D !default;
 $midnight-light: #14418B !default;
 
 $night-dark: #023141 !default;
-$night-light: #01526C !default;
+$night-light: #f0cdbd !default;
 
 $page-icon-color: #6d1d46 !default;
 
@@ -42,9 +42,9 @@ $page-content-placeholder-font-size: 20;
 $ab-background: $accent-dark;
 $ab-color: $background-light;
 
-$item-active-color: $background-dark;
+$item-active-color: $background-light;
 $item-active-icon-color: $accent-dark;
 $item-active-background: $accent-light;
 
 //Side-drawer
-$side-drawer-background: $background-light;
+$side-drawer-background: $accent-dark;

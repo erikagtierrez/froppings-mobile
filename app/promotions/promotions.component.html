@@ -1,37 +1,38 @@
 <ActionBar class="action-bar">
-    <!-- 
-    Use the NavigationButton as a side-drawer button in Android because ActionItems are shown on the right side of the ActionBar
-    -->
     <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <!-- 
-    Use the ActionItem for IOS with position set to left. Using the NavigationButton as a side-drawer button in iOS is not possible, because its function is to always navigate back in the application.
-    -->
-    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
-        ios.position="left">
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
     </ActionItem>
     <Label class="action-bar-title" text="Promociones"></Label>
 </ActionBar>
 
-<!--
-RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
-Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
-http://docs.telerik.com/devtools/nativescript-ui/Controls/Angular/SideDrawer/getting-started
-The RadSideDrawer component is designed to be used as a root element and
-it shouldn't have any other siblings other than the <ActionBar> component.
--->
 <RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
-    <!--
-    Use the tkDrawerContent directive to display the content of the app drawer on this page.
-    -->
     <StackLayout tkDrawerContent>
         <MyDrawer [selectedPage]="'Promociones'"></MyDrawer>
     </StackLayout>
-    
-    <!--
-    Use the tkMainContent directive to display the content of the page when you have an app drawer.
-    -->
-    <GridLayout class="page page-content" tkMainContent>
-        <Label class="page-icon fa" text="&#xf002;"></Label>
-        <Label class="page-placeholder" text="<!-- Page content goes here -->"></Label>
+
+    <GridLayout class="page page-content" tkMainContent background-color="#EEEEEE">
+        <ListView [items]="promotions" colSpan="1" height="100%" width="100%">
+            <template let-item="item" let-i="index">
+                    <!-- Promociones -->
+                    <StackLayout margin="20 8" class="promo">
+                        <Gradient direction="to right" colors="#cc2b5e,#753a88" orientation="horizontal" width="100%" height="130" class="promoHeader">
+                            <Image src="~/assets/froppingsSquare.png" class="circlePic" width="80%" height="80%" stretch="aspectFit"></Image>
+                            <Label text="5000BsF OFF" ></Label>
+                            <Label text="Froppings" ></Label>
+                        </Gradient>
+                        <StackLayout class="promoContent" width="100%" height="70">
+                            <StackLayout orientation="horizontal">
+                                <Label [text]="'\uf017'" class="fa"></Label>
+                                <Label text="23 Mayo a 10 Junio" ></Label>
+                            </StackLayout>
+                            <StackLayout orientation="horizontal">
+                                <Label [text]="'\uf05a'" class="fa" margin="10 20"></Label>
+                                <Label text="Compras mayores a 20000BsF" margin="10 20"></Label>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                    <!-- Cupones -->
+            </template>
+        </ListView>
     </GridLayout>
 </RadSideDrawer>
