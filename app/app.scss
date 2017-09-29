@@ -2,7 +2,7 @@
 // other than “light”, switch the path to the alternative scheme,
 // for example '~nativescript-theme-core/scss/dark'.
 @import '~/nativescript-theme-core/css/core.light.css';
-@import '~nativescript-theme-core/scss/grey';
+@import '~nativescript-theme-core/scss/light';
 
 // Start custom common variables
 @import 'app-variables';
@@ -123,7 +123,7 @@ Page {
 }
 
 .promoContent{
-    background-color: $night-light;
+    background-color: #DEDEDE;
 }
 
 .promo{
@@ -133,4 +133,21 @@ Page {
 .circlePic{
     border-radius: 50;
     background-color: white;
+}
+
+.promoText{
+    color:white;
+    font-size: 25;
+    font-weight: bold;
+}
+.promoTextBig{
+    color:white;
+    font-size: 30;
+    font-weight: bold;
+}
+
+.couponTextBig{
+    color:white;
+    font-size: 50;
+    font-weight: bold;
 }

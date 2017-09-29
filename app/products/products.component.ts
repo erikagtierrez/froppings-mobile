@@ -23,7 +23,7 @@ export class Product {
         public points:number,
         public image:string
     ){
-        initializeOnAngular();
+        
     }
 }
 
@@ -41,6 +41,7 @@ export class ProductsComponent implements OnInit {
   public subscr;
 
   constructor(private router: Router) {
+    initializeOnAngular();
   }
 
   ngOnInit(): void {
