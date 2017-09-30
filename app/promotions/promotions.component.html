@@ -6,49 +6,46 @@
 </ActionBar>
 
 <RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
-    <StackLayout tkDrawerContent>
+    <StackLayout tkDrawerContent >
         <MyDrawer [selectedPage]="'Promociones'"></MyDrawer>
     </StackLayout>
 
-    <GridLayout class="page page-content" class="Page" tkMainContent>
-        <ListView [items]="promotions" colSpan="1" height="100%" width="100%">
+    <GridLayout class="page page-content" class="Page" tkMainContent margin="15 0 0 0">
+        <ListView [items]="promotions | async" colSpan="1" separatorColor="white" height="100%" width="100%" >
             <template let-item="item" let-i="index">
                 <!-- Promotions -->
                 <StackLayout>
-                    <StackLayout margin="20 8 10 8" class="promo" *ngIf="item.type=='promo'">
-                        <Gradient direction="to right" colors="#aa076b,#61045f" orientation="horizontal" width="100%" height="130" class="promoHeader">
-                            <DockLayout stretchLastChild="true" width="100%">
-                                <Image src="~/assets/froppingsSquare.png" dock="left" class="circlePic" margin="15 15" padding="10 5" stretch="aspectFit"></Image>
-                                <StackLayout dock="right" horizontalAlignment="right" verticalAlignment="center" margin="0 20 0 0">
-                                    <label text="BsF. 5000" class="promoText" ></label>
-                                    <label text="OFF" class="promoTextBig" horizontalAlignment="right"></label>
+                    <StackLayout margin="5 8 5 8" class="promo" *ngIf="item.type=='promo'">
+                        <Gradient direction="to right" colors="#42275a,#734b6d" orientation="horizontal" width="100%" padding="0 0 10 0" class="promoHeader">
+                            <StackLayout>
+                                <StackLayout orientation="horizontal" width="100%"  margin="10 0 0 0" horizontalAlignment="center">
+                                    <Image src="~/assets/logoicon.png" dock="left" class="logoborder" width="50%" margin="15 15" padding="10 5"></Image>
                                 </StackLayout>
-                            </DockLayout>
+                                <StackLayout class="" width="100%" margin="0 0">
+                                    <StackLayout orientation="horizontal" horizontalAlignment="center" width="100%" >
+                                        <Label text="{{item.name}}" class="text-white wrap droidiga promoText" textWrap="true"></Label>
+                                    </StackLayout>
+                                    <StackLayout orientation="horizontal" margin="5 0 0 0">
+                                        <Label [text]="'\uf017'" class="fa text-white" margin="10 10 10 15"></Label>
+                                        <Label text="{{item.dateStart}} al {{item.dateEnd}}" class="wrap text-white fontSmall" margin="0 10 0 0"></Label>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
                         </Gradient>
-                        <StackLayout class="promoContent" width="100%" height="70">
-                            <StackLayout orientation="horizontal">
-                                <Label [text]="'\uf05a'" class="fa" margin="10 10 5 15"></Label>
-                                <Label text="Compras mayores a 20000BsF" class="wrap " margin="10 10 5 0"></Label>
-                            </StackLayout>
-                            <StackLayout orientation="horizontal">
-                                <Label [text]="'\uf017'" class="fa " margin="0 10 10 15"></Label>
-                                <Label text="23 Mayo a 10 Junio" class="wrap " margin="0 10 10 0"></Label>
-                            </StackLayout>
-                        </StackLayout>
                     </StackLayout>
                     <!-- Coupons -->
                     <StackLayout>
-                        <StackLayout margin="20 8 10 8" class="promo" *ngIf="item=='coupon'">
-                            <Gradient direction="to right" colors="#36d1dc,#5b86e5" orientation="horizontal" width="100%" height="200" class="promoHeader">
+                        <StackLayout margin="5 8 5 8" class="promo" *ngIf="item.type=='coupon'">
+                            <Gradient direction="to right" colors="#36d1dc,#5b86e5" orientation="horizontal" width="100%" height="190" class="promoHeader">
                                 <DockLayout stretchLastChild="true" width="100%">
                                     <DockLayout stretchLastChild="true" dock="top">
                                         <StackLayout orientation="horizontal" dock="top">
                                             <DockLayout stretchLastChild="true" width="100%">
                                                 <StackLayout horizontalAlignment="left" dock="left" verticalAlignment="center" margin="25 20 10 20">
-                                                    <label text="-15%" class="couponTextBig" horizontalAlignment="left"></label>
+                                                    <label text="-{{item.discount}}%" class="couponTextBig" horizontalAlignment="left"></label>
                                                 </StackLayout>
-                                                <StackLayout horizontalAlignment="right" dock="right" verticalAlignment="center" margin="15 25 0 0">
-                                                    <label text="SJ3F" class="promoTextBig" horizontalAlignment="right"></label>
+                                                <StackLayout horizontalAlignment="right" dock="right" verticalAlignment="center" margin="15 20 0 0">
+                                                    <label text="{{item.code}}" class="promoTextBig" horizontalAlignment="right"></label>
                                                 </StackLayout>
                                             </DockLayout>
                                         </StackLayout>
@@ -60,11 +57,11 @@
                                         <StackLayout class="" width="100%">
                                             <StackLayout orientation="horizontal">
                                                 <Label [text]="'\uf05a'" class="fa text-white" margin="15 10 5 15"></Label>
-                                                <Label text="Compras mayores a 20000BsF" class="wrap text-white" margin="15 10 5 0" ></Label>
+                                                <Label text="Compras mayores a Bs. {{item.minPurchase}}" class="wrap text-white fontSmall" margin="15 10 5 0"></Label>
                                             </StackLayout>
                                             <StackLayout orientation="horizontal">
-                                                <Label [text]="'\uf017'" class="fa text-white"  margin="0 10 10 15"></Label>
-                                                <Label text="Valido hasta el 10 Junio" class="wrap text-white" margin="0 10 10 0" ></Label>
+                                                <Label [text]="'\uf017'" class="fa text-white" margin="0 10 10 15"></Label>
+                                                <Label text="Valido hasta el {{item.dateEnd}}" class="wrap text-white fontSmall" margin="0 10 10 0"></Label>
                                             </StackLayout>
                                         </StackLayout>
                                     </DockLayout>

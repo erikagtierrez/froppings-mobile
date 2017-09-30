@@ -9,12 +9,12 @@
         <MyDrawer [selectedPage]="'Productos'"></MyDrawer>
     </StackLayout>
     <StackLayout class="page page-content" margin="10 0 0 0" background-color="#EEEEEE" tkMainContent>
-        <ListView [items]="products | async" #productsList colSpan="1" height="100%" width="100%">
+        <ListView [items]="products | async" #productsList separatorColor="white" colSpan="1" height="100%" width="100%">
             <template let-item="item" let-i="index">
                 <StackLayout [class.third]="third">
                     <GridLayout rows="*" columns="*,*">
                         <StackLayout class="cardStyle" margin="10 10" elevation="50" radius="1" col="0">
-                            <StackLayout>
+                            <StackLayout width="100%">
                                 <WebImage stretch="fill" placeholder="Loading..." width="100%" height="100%" src="{{item.image}}">
                                 </WebImage>
                                 <Label [text]="item.name" class="text-white" padding="10 15"></Label>
@@ -22,29 +22,12 @@
                         </StackLayout>
                         <StackLayout class="" margin="5 5" col="1">
                             <Label [text]="item.description" class="wrap" padding="10 10 0 0"></Label>
-                            <Label text="BsF. {{item.price}}" padding="10 0"></Label>
+                            <Label text="Bs. {{item.price}}" padding="10 0"></Label>
                             <Label class="pointsNumber text-center" text="{{item.points}} PUNTOS" margin="0 20 20 0" padding="10 0"></Label>
                         </StackLayout>
                     </GridLayout>
                 </StackLayout>
             </template>
         </ListView>
-        <!-- <WrapLayout orientation="horizontal" >
-            <StackLayout *ngFor="let product of products | async">
-                <GridLayout rows="*" columns="*,*">
-                    <StackLayout class="cardStyle" margin="5 5" elevation="50" radius="1" col="0">
-                        <StackLayout>
-                            <Image src="{{product.image}}"></Image>
-                            <Label text="{{product.name}}" class="text-white" padding="10 10"></Label>
-                        </StackLayout>
-                    </StackLayout>
-                    <StackLayout class="" margin="5 5" col="1">
-                        <Label text="{{product.description}}" class="wrap" padding="10 10 0 0"></Label>
-                        <Label text="{{product.price}}" padding="5 0"></Label>
-                        <Label class="pointsNumber text-center" [text]="product.points" padding="0 0 10 0"></Label>
-                    </StackLayout>
-                </GridLayout>
-            </StackLayout>
-        </WrapLayout>     -->
     </StackLayout>
 </RadSideDrawer>

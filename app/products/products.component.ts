@@ -1,6 +1,7 @@
 import {
   Component,
   OnInit,
+  NgZone,
   ViewChild,
   ChangeDetectionStrategy
 } from "@angular/core";
@@ -12,35 +13,33 @@ import { RadSideDrawerComponent } from "nativescript-telerik-ui/sidedrawer/angul
 import { Router } from "@angular/router";
 import firebase = require("nativescript-plugin-firebase");
 import * as elementRegistryModule from "nativescript-angular/element-registry";
-import { Observable as RxObservable } from 'rxjs/Observable';
-import {initializeOnAngular} from "nativescript-web-image-cache";
+import { Observable as RxObservable } from "rxjs/Observable";
+import { initializeOnAngular } from "nativescript-web-image-cache";
 
 export class Product {
-    constructor(
-        public name: string,
-        public description: string,
-        public price:number,
-        public points:number,
-        public image:string
-    ){
-        
-    }
+  constructor(
+    public name: string,
+    public description: string,
+    public price: number,
+    public points: number,
+    public image: string,
+    public key: string
+  ) {}
 }
 
 @Component({
   selector: "app-products",
   moduleId: module.id,
-  templateUrl: "./products.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush 
+  templateUrl: "./products.component.html"
 })
 export class ProductsComponent implements OnInit {
   @ViewChild("drawer") drawerComponent: RadSideDrawerComponent;
   private _sideDrawerTransition: DrawerTransitionBase;
-  public products:RxObservable<Array<Product>>;
-  public productsArray=[];
+  public products: RxObservable<Array<Product>>;
+  public productsArray = [];
   public subscr;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private zone: NgZone) {
     initializeOnAngular();
   }
 
@@ -53,21 +52,21 @@ export class ProductsComponent implements OnInit {
       }
     });
     this.products = RxObservable.create(subscriber => {
-        this.subscr = subscriber;
-        subscriber.next(this.productsArray);
-        return function () {
-            console.log("Unsubscribe called!!!");
-        }
+      this.subscr = subscriber;
+      subscriber.next(this.productsArray);
+      return function() {
+        console.log("Unsubscribe called!!!");
+      };
     });
 
     let counter = 2;
     let intervalId = setInterval(() => {
-        counter++;
-        this.subscr.next(this.productsArray);
+      counter++;
+      this.subscr.next(this.productsArray);
     }, 1000);
 
     setTimeout(() => {
-        clearInterval(intervalId);
+      clearInterval(intervalId);
     }, 15000);
   }
 
@@ -79,14 +78,39 @@ export class ProductsComponent implements OnInit {
     this.drawerComponent.sideDrawer.showDrawer();
   }
 
-  onProductsEvent = (result) =>{
+  onProductsEvent = result => {
     if (!result.error) {
       console.log("Value: " + JSON.stringify(result.value));
       var item = result.value;
-      this.productsArray.push(
-          new Product(item.name, item.description, item.price, item.points, item.image)
-        );
-      this.subscr.next(this.productsArray);
+      var exist = 0;
+      console.log(exist);
+      this.zone.run(() => {
+        this.productsArray.forEach((element, index) => {
+          console.log(result.key + "=" + element.key);
+          if (element.key == result.key) {
+            this.productsArray[index].name = item.name;
+            this.productsArray[index].description = item.description;
+            this.productsArray[index].price = item.price;
+            this.productsArray[index].points = item.points;
+            this.productsArray[index].image = item.image;
+            this.productsArray[index].key = result.key;
+            exist += 1;
+            console.log("updated");
+          }
+        });
+        if (exist == 0) {
+          this.productsArray.push(
+            new Product(
+              item.name,
+              item.description,
+              item.price,
+              item.points,
+              item.image,
+              result.key
+            )
+          );
+        }
+      });
     }
   };
 }

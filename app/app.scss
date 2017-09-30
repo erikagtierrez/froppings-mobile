@@ -23,9 +23,12 @@
 .fa {
     font-family: 'FontAwesome', fontawesome-webfont;
 }
+
+.droidiga {
+    font-family: Droidiga;
+}
 // Common page class
 .page-content {
-    background-color: #EEEEEE;
     .page-placeholder {
         color: $page-icon-color;
         font-size: $page-content-placeholder-font-size;
@@ -123,23 +126,27 @@ Page {
 }
 
 .promoContent{
-    background-color: #DEDEDE;
+    background-color: rgba(41, 33, 29, 0.76);
 }
 
 .promo{
     border-radius: 10;
 }
 
-.circlePic{
-    border-radius: 50;
-    background-color: white;
+.logoborder{
 }
 
 .promoText{
     color:white;
-    font-size: 25;
+    font-size: 18s;
+    text-align: center;
     font-weight: bold;
 }
+
+.fontSmall{
+    font-size: 16s;
+}
+
 .promoTextBig{
     color:white;
     font-size: 30;
