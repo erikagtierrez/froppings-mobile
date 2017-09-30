@@ -14,12 +14,7 @@ import firebase = require("nativescript-plugin-firebase");
 import { Router } from "@angular/router";
 import * as elementRegistryModule from "nativescript-angular/element-registry";
 import { Observable as RxObservable } from "rxjs/Observable";
-import { registerElement } from "nativescript-angular";
-registerElement("Gradient", () => require("nativescript-gradient").Gradient);
-elementRegistryModule.registerElement(
-  "CardView",
-  () => require("nativescript-cardview").CardView
-);
+
 
 export class Promotion {
   constructor(
@@ -27,7 +22,6 @@ export class Promotion {
     public type: string,
     public discount: number,
     public code: string,
-    public discountType: string,
     public dateStart: string,
     public dateEnd: string,
     public minPurchase: number,
@@ -104,7 +98,6 @@ export class PromotionsComponent implements OnInit {
             item.type,
             item.discount,
             item.code,
-            item.discountType,
             item.dateStart,
             item.dateEnd,
             item.minPurchase,

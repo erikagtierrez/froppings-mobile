@@ -260,6 +260,17 @@ export class LoginComponent implements OnInit {
       .then(
         result => {
           console.log(JSON.stringify(result));
+          var secureStorage = new SecureStorage();
+          console.log("logged2");
+          secureStorage.set({
+            key: "user",
+            value: JSON.stringify({
+              name: result.name,
+              email: this.email,
+              image:result.profileImageURL
+            })
+          });
+          console.log("Successfully set a value");
           this.router.navigateByUrl("/home");
         },
         errorMessage => {
@@ -301,6 +312,18 @@ export class LoginComponent implements OnInit {
             .then(result => {
               for (var key in result.value) {
                 console.log("Value: " + result.value[key].email);
+                var secureStorage = new SecureStorage();
+                secureStorage
+                  .set({
+                    key: "user",
+                    value: {
+                      name: this.nameRegister + " " + this.lastnameRegister,
+                      email: this.emailRegister
+                    }
+                  })
+                  .then(function(success) {
+                    console.log("Successfully set a value? " + success);
+                  });
                 this.router.navigateByUrl("/home");
               }
             })
@@ -329,6 +352,17 @@ export class LoginComponent implements OnInit {
         result => {
           JSON.stringify(result);
           console.log(result);
+          var secureStorage = new SecureStorage();
+          console.log("logged2");
+          secureStorage.set({
+            key: "user",
+            value: JSON.stringify({
+              name: result.name,
+              email: this.email,
+              image:result.profileImageURL
+            })
+          });
+          console.log("Successfully set a value");
           this.router.navigateByUrl("/home");
         },
         errorMessage => {
@@ -373,6 +407,18 @@ export class LoginComponent implements OnInit {
             .then(result => {
               for (var key in result.value) {
                 console.log("Value: " + result.value[key].email);
+                var secureStorage = new SecureStorage();
+                secureStorage
+                  .set({
+                    key: "user",
+                    value: {
+                      name: this.nameRegister + " " + this.lastnameRegister,
+                      email: this.emailRegister
+                    }
+                  })
+                  .then(function(success) {
+                    console.log("Successfully set a value? " + success);
+                  });
                 this.router.navigateByUrl("/home");
               }
             })

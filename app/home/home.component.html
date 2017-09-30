@@ -1,23 +1,106 @@
 <ActionBar class="action-bar">
     <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
-    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
-        ios.position="left">
+    <ActionItem icon="res://navigation/menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
     </ActionItem>
-    <Label class="action-bar-title" text="Home"></Label>
+    <Label class="action-bar-title" text="FROPPINGS"></Label>
 </ActionBar>
 <RadSideDrawer #drawer showOverNavigation="true" [drawerTransition]="sideDrawerTransition">
-    <!--
-    Use the tkDrawerContent directive to display the content of the app drawer on this page.
-    -->
     <StackLayout tkDrawerContent>
         <MyDrawer [selectedPage]="'Home'"></MyDrawer>
     </StackLayout>
-    
-    <!--
-    Use the tkMainContent directive to display the content of the page when you have an app drawer.
-    -->
-    <GridLayout class="page page-content" tkMainContent>
-        <Label class="page-icon fa" text="&#xf015;"></Label>
-        <Label class="page-placeholder" text="<!-- Page content goes here -->"></Label>
+    <GridLayout class="page page-content" margin="15 0 0 0" tkMainContent>
+        <ListView [items]="featured" colSpan="1" separatorColor="white" height="100%" width="100%">
+            <ng-template let-item="item" let-i="index">
+                <StackLayout>
+                    <!-- Promotions -->
+                    <StackLayout margin="5 8 5 8" class="promo" *ngIf="item.type=='promo'">
+                        <Gradient direction="to right" colors="#42275a,#734b6d" orientation="horizontal" width="100%" padding="0 0 10 0" class="promoHeader">
+                            <StackLayout>
+                                <StackLayout orientation="horizontal" width="100%" margin="0 0 0 0" horizontalAlignment="center">
+                                    <Image src="~/assets/logoicon.png" dock="left" class="logoborder" width="50%" margin="15 15" padding="10 5"></Image>
+                                </StackLayout>
+                                <StackLayout class="" width="100%">
+                                    <StackLayout horizontalAlignment="center" width="100%">
+                                        <Label text="{{item.name}}" class="text-white wrap droidiga promoText" textWrap="true"></Label>
+                                        <Label text="{{item.discount}} OFF!" class="text-white wrap droidiga promoText" textWrap="true"></Label>
+                                    </StackLayout>
+                                    <StackLayout orientation="horizontal">
+                                        <Label [text]="'\uf05a'" class="fa text-white" margin="10 10 0 15"></Label>
+                                        <Label text="Compras mayores a Bs. {{item.minPurchase}}" class="wrap text-white fontSmall" margin="10 10 0 0"></Label>
+                                    </StackLayout>
+                                    <StackLayout orientation="horizontal" margin="0 0 0 0">
+                                        <Label [text]="'\uf017'" class="fa text-white" margin="10 10 10 15"></Label>
+                                        <Label text="{{item.dateStart}} al {{item.dateEnd}}" class="wrap text-white fontSmall" margin="0 0 0 0"></Label>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </Gradient>
+                    </StackLayout>
+                    <!-- Coupons -->
+                    <StackLayout>
+                        <StackLayout margin="5 8 5 8" class="promo" *ngIf="item.type=='coupon'">
+                            <Gradient direction="to right" colors="#36d1dc,#5b86e5" orientation="horizontal" width="100%" height="190" class="promoHeader">
+                                <DockLayout stretchLastChild="true" width="100%">
+                                    <DockLayout stretchLastChild="true" dock="top">
+                                        <StackLayout orientation="horizontal" dock="top">
+                                            <DockLayout stretchLastChild="true" width="100%">
+                                                <StackLayout horizontalAlignment="left" dock="left" verticalAlignment="center" margin="25 20 10 20">
+                                                    <label text="-{{item.discount}}%" class="couponTextBig" horizontalAlignment="left"></label>
+                                                </StackLayout>
+                                                <StackLayout horizontalAlignment="right" dock="right" verticalAlignment="center" margin="15 20 0 0">
+                                                    <label text="{{item.code}}" class="promoTextBig" horizontalAlignment="right"></label>
+                                                </StackLayout>
+                                            </DockLayout>
+                                        </StackLayout>
+                                        <StackLayout dock="bottom" horizontalAlignment="center" verticalAlignment="center" margin="0 20">
+                                            <Image src="~/assets/element.png" stretch="aspectFit" verticalAlignment="center"></Image>
+                                        </StackLayout>
+                                    </DockLayout>
+                                    <DockLayout width="100%" dock="bottom">
+                                        <StackLayout class="" width="100%">
+                                            <StackLayout orientation="horizontal">
+                                                <Label [text]="'\uf05a'" class="fa text-white" margin="15 10 5 15"></Label>
+                                                <Label text="Compras mayores a Bs. {{item.minPurchase}}" class="wrap text-white fontSmall" margin="15 10 5 0"></Label>
+                                            </StackLayout>
+                                            <StackLayout orientation="horizontal">
+                                                <Label [text]="'\uf017'" class="fa text-white" margin="0 10 10 15"></Label>
+                                                <Label text="Valido hasta el {{item.dateEnd}}" class="wrap text-white fontSmall" margin="0 10 10 0"></Label>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </DockLayout>
+                                </DockLayout>
+                            </Gradient>
+                        </StackLayout>
+                    </StackLayout>
+                    <!-- Image Post -->
+                    <StackLayout margin="15 10">
+                        <CardView class="imagePost" elevation="50" width="100%" height="100%" radius="1" *ngIf="item=='imagePost'">
+                            <StackLayout>
+                                <StackLayout width="100%" width="100%" margin="0 0">
+                                    <Image src="~/assets/test.png" stretch="fill" width="100%"></Image>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label text="No te pierdas el especial de malteadas de cholate en tu heladeria preferida!" class="wrap textCaption" margin="10 0 10 10"></Label>
+                                </StackLayout>
+                            </StackLayout>
+                        </CardView>
+                    </StackLayout>
+                    <!-- Message Post -->
+                    <StackLayout margin="15 10">
+                        <CardView class="imagePost" elevation="50" width="100%" height="100%" radius="1" *ngIf="item=='messagePost'">
+                            <StackLayout>
+                                <StackLayout width="100%" width="100%" margin="0 0">
+                                    <Image src="~/assets/diamante.png" width="100%"></Image>
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label text="Titulo" class="wrap textCaption" margin="10 0 10 10"></Label>
+                                    <Label text="Lorem ipsum dolor sit amet lorem ipsum dolor sit ament" class="wrap textCaption" margin="50 0 10 10"></Label>
+                                </StackLayout>
+                            </StackLayout>
+                        </CardView>
+                    </StackLayout>
+                </StackLayout>
+            </ng-template>
+        </ListView>
     </GridLayout>
 </RadSideDrawer>

@@ -12,22 +12,27 @@
 
     <GridLayout class="page page-content" class="Page" tkMainContent margin="15 0 0 0">
         <ListView [items]="promotions | async" colSpan="1" separatorColor="white" height="100%" width="100%" >
-            <template let-item="item" let-i="index">
+            <ng-template let-item="item" let-i="index">
                 <!-- Promotions -->
                 <StackLayout>
                     <StackLayout margin="5 8 5 8" class="promo" *ngIf="item.type=='promo'">
                         <Gradient direction="to right" colors="#42275a,#734b6d" orientation="horizontal" width="100%" padding="0 0 10 0" class="promoHeader">
                             <StackLayout>
-                                <StackLayout orientation="horizontal" width="100%"  margin="10 0 0 0" horizontalAlignment="center">
+                                <StackLayout orientation="horizontal" width="100%"  margin="0 0 0 0" horizontalAlignment="center">
                                     <Image src="~/assets/logoicon.png" dock="left" class="logoborder" width="50%" margin="15 15" padding="10 5"></Image>
                                 </StackLayout>
-                                <StackLayout class="" width="100%" margin="0 0">
-                                    <StackLayout orientation="horizontal" horizontalAlignment="center" width="100%" >
+                                <StackLayout class="" width="100%" >
+                                    <StackLayout horizontalAlignment="center" width="100%" >
                                         <Label text="{{item.name}}" class="text-white wrap droidiga promoText" textWrap="true"></Label>
+                                        <Label text="{{item.discount}} OFF!" class="text-white wrap droidiga promoText" textWrap="true"></Label>
                                     </StackLayout>
-                                    <StackLayout orientation="horizontal" margin="5 0 0 0">
+                                    <StackLayout orientation="horizontal">
+                                            <Label [text]="'\uf05a'" class="fa text-white" margin="10 10 0 15"></Label>
+                                            <Label text="Compras mayores a Bs. {{item.minPurchase}}" class="wrap text-white fontSmall" margin="10 10 0 0"></Label>
+                                        </StackLayout>
+                                    <StackLayout orientation="horizontal" margin="0 0 0 0">
                                         <Label [text]="'\uf017'" class="fa text-white" margin="10 10 10 15"></Label>
-                                        <Label text="{{item.dateStart}} al {{item.dateEnd}}" class="wrap text-white fontSmall" margin="0 10 0 0"></Label>
+                                        <Label text="{{item.dateStart}} al {{item.dateEnd}}" class="wrap text-white fontSmall" margin="0 0 0 0"></Label>
                                     </StackLayout>
                                 </StackLayout>
                             </StackLayout>
@@ -70,7 +75,7 @@
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
-            </template>
+            </ng-template>
         </ListView>
     </GridLayout>
 </RadSideDrawer>

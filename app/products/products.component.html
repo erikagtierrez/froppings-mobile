@@ -10,7 +10,7 @@
     </StackLayout>
     <StackLayout class="page page-content" margin="10 0 0 0" background-color="#EEEEEE" tkMainContent>
         <ListView [items]="products | async" #productsList separatorColor="white" colSpan="1" height="100%" width="100%">
-            <template let-item="item" let-i="index">
+            <ng-template let-item="item" let-i="index">
                 <StackLayout [class.third]="third">
                     <GridLayout rows="*" columns="*,*">
                         <StackLayout class="cardStyle" margin="10 10" elevation="50" radius="1" col="0">
@@ -27,7 +27,7 @@
                         </StackLayout>
                     </GridLayout>
                 </StackLayout>
-            </template>
+            </ng-template>
         </ListView>
     </StackLayout>
 </RadSideDrawer>
