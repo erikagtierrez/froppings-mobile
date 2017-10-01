@@ -12,7 +12,6 @@ import {
 import { RadSideDrawerComponent } from "nativescript-telerik-ui/sidedrawer/angular";
 import { Router } from "@angular/router";
 import firebase = require("nativescript-plugin-firebase");
-import * as elementRegistryModule from "nativescript-angular/element-registry";
 import { Observable as RxObservable } from "rxjs/Observable";
 import { initializeOnAngular } from "nativescript-web-image-cache";
 

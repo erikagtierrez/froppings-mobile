@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import firebase = require("nativescript-plugin-firebase");
-import * as elementRegistryModule from "nativescript-angular/element-registry";
 import { Page } from "ui/page";
 import { TextField } from "ui/text-field";
 import * as EmailValidator from "email-validator";
@@ -8,11 +7,6 @@ import { Router } from "@angular/router";
 import * as dialogs from "ui/dialogs";
 var SecureStorage = require("nativescript-secure-storage").SecureStorage;
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
-
-elementRegistryModule.registerElement(
-  "CardView",
-  () => require("nativescript-cardview").CardView
-);
 
 @Component({
   selector: "app-login",
@@ -266,7 +260,7 @@ export class LoginComponent implements OnInit {
             key: "user",
             value: JSON.stringify({
               name: result.name,
-              email: this.email,
+              email: result.email,
               image:result.profileImageURL
             })
           });
@@ -317,8 +311,9 @@ export class LoginComponent implements OnInit {
                   .set({
                     key: "user",
                     value: {
-                      name: this.nameRegister + " " + this.lastnameRegister,
-                      email: this.emailRegister
+                      name: result.name,
+                      email: result.email,
+                      image:result.profileImageURL
                     }
                   })
                   .then(function(success) {
@@ -358,7 +353,7 @@ export class LoginComponent implements OnInit {
             key: "user",
             value: JSON.stringify({
               name: result.name,
-              email: this.email,
+              email: result.email,
               image:result.profileImageURL
             })
           });
@@ -412,8 +407,9 @@ export class LoginComponent implements OnInit {
                   .set({
                     key: "user",
                     value: {
-                      name: this.nameRegister + " " + this.lastnameRegister,
-                      email: this.emailRegister
+                      name: result.name,
+                      email: result.email,
+                      image:result.profileImageURL
                     }
                   })
                   .then(function(success) {

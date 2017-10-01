@@ -9,7 +9,7 @@ Feel free to customize layouts and components to change how your app drawer look
         <Label class="footnote" [text]="user.email"></Label>
     </StackLayout>
     
-    <StackLayout class="sidedrawer-content backgrounx">
+    <StackLayout class="sidedrawer-content">
         <ListView [items]="navigationItems" separatorColor="transparent" (itemTap)="onNavigationItemTap($event)">
             <ng-template let-item="item" let-i="index" let-odd="odd" let-even="even">
                 <GridLayout columns="auto, *" rows="50"

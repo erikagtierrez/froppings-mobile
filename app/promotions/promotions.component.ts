@@ -12,9 +12,8 @@ import {
 import { RadSideDrawerComponent } from "nativescript-telerik-ui/sidedrawer/angular";
 import firebase = require("nativescript-plugin-firebase");
 import { Router } from "@angular/router";
-import * as elementRegistryModule from "nativescript-angular/element-registry";
 import { Observable as RxObservable } from "rxjs/Observable";
-
+var nativescriptGradient = require("nativescript-gradient")
 
 export class Promotion {
   constructor(

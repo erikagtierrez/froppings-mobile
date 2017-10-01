@@ -5,7 +5,12 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { GridViewModule } from 'nativescript-grid-view/angular';
+import * as elementRegistryModule from 'nativescript-angular/element-registry';
+import * as LabelModule from "tns-core-modules/ui/label";
 
+elementRegistryModule.registerElement("CardView", () => require("nativescript-cardview").CardView);
+import { registerElement } from "nativescript-angular";
+registerElement("Gradient", () => require("nativescript-gradient").Gradient);
 
 @NgModule({
     bootstrap: [

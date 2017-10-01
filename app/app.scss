@@ -27,6 +27,8 @@
 .droidiga {
     font-family: Droidiga;
 }
+
+
 // Common page class
 .page-content {
     .page-placeholder {
@@ -160,13 +162,17 @@ Page {
 }
 
 .messagePost{
-
+    background-color: #810d43;
+    border-radius: 10;
+    box-shadow: 10px 10px 5px grey;
 }
 
 .imagePost{
     background-color: white;
+
 }
 
 .textCaption{
     font-weight: bold;
+    
 }

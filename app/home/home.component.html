@@ -8,7 +8,7 @@
     <StackLayout tkDrawerContent>
         <MyDrawer [selectedPage]="'Home'"></MyDrawer>
     </StackLayout>
-    <GridLayout class="page page-content" margin="15 0 0 0" tkMainContent>
+    <GridLayout class="page page-content" margin="15 0 0 0" padding="0 0 5 0" tkMainContent>
         <ListView [items]="featured" colSpan="1" separatorColor="white" height="100%" width="100%">
             <ng-template let-item="item" let-i="index">
                 <StackLayout>
@@ -73,28 +73,30 @@
                         </StackLayout>
                     </StackLayout>
                     <!-- Image Post -->
-                    <StackLayout margin="15 10">
-                        <CardView class="imagePost" elevation="50" width="100%" height="100%" radius="1" *ngIf="item=='imagePost'">
+                    <StackLayout margin="2 10 2 10">
+                        <CardView class="imagePost" elevation="50" width="100%" height="100%" radius="1" *ngIf="item.type=='image'">
                             <StackLayout>
                                 <StackLayout width="100%" width="100%" margin="0 0">
-                                    <Image src="~/assets/test.png" stretch="fill" width="100%"></Image>
+                                    <Image [src]="item.image" stretch="fill" width="100%"></Image>
                                 </StackLayout>
                                 <StackLayout>
-                                    <Label text="No te pierdas el especial de malteadas de cholate en tu heladeria preferida!" class="wrap textCaption" margin="10 0 10 10"></Label>
+                                    <Label [text]="item.name" class="wrap" margin="10 0 10 10"></Label>
                                 </StackLayout>
                             </StackLayout>
                         </CardView>
                     </StackLayout>
                     <!-- Message Post -->
-                    <StackLayout margin="15 10">
-                        <CardView class="imagePost" elevation="50" width="100%" height="100%" radius="1" *ngIf="item=='messagePost'">
+                    <StackLayout margin="2 10 2 10">
+                        <CardView class="messagePost" elevation="50" width="100%" radius="5" *ngIf="item.type=='message'">
                             <StackLayout>
-                                <StackLayout width="100%" width="100%" margin="0 0">
-                                    <Image src="~/assets/diamante.png" width="100%"></Image>
+                                <StackLayout>
+                                        <Label [text]="item.name" class="wrap text-white textCaption" margin="10 0 10 10"></Label>                                        
+                                </StackLayout>
+                                <StackLayout dock="bottom" horizontalAlignment="center" verticalAlignment="center" margin="0 20">
+                                    <Image src="~/assets/element.png" stretch="aspectFit" verticalAlignment="center"></Image>
                                 </StackLayout>
                                 <StackLayout>
-                                    <Label text="Titulo" class="wrap textCaption" margin="10 0 10 10"></Label>
-                                    <Label text="Lorem ipsum dolor sit amet lorem ipsum dolor sit ament" class="wrap textCaption" margin="50 0 10 10"></Label>
+                                    <Label [text]="item.description" class="wrap text-white" margin="10 0 10 10"></Label>
                                 </StackLayout>
                             </StackLayout>
                         </CardView>
