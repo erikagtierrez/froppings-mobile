@@ -4,12 +4,14 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { SharedModule } from "../shared/shared.module";
 import { LoginComponent } from "./login.component";
 import { LoginRoutingModule } from "./login-routing.module";
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 @NgModule({
     imports: [
         NativeScriptModule,
         LoginRoutingModule,        
-        SharedModule
+        SharedModule,
+        NativeScriptFormsModule
     ],
     declarations: [
         LoginComponent

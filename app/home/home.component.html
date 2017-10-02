@@ -9,7 +9,7 @@
         <MyDrawer [selectedPage]="'Home'"></MyDrawer>
     </StackLayout>
     <GridLayout class="page page-content" margin="15 0 0 0" padding="0 0 5 0" tkMainContent>
-        <ListView [items]="featured" colSpan="1" separatorColor="white" height="100%" width="100%">
+        <ListView [items]="featured | async" colSpan="1" separatorColor="white" height="100%" width="100%">
             <ng-template let-item="item" let-i="index">
                 <StackLayout>
                     <!-- Promotions -->

@@ -5,12 +5,12 @@ import { TextField } from "ui/text-field";
 import * as EmailValidator from "email-validator";
 import { Router } from "@angular/router";
 import * as dialogs from "ui/dialogs";
-var SecureStorage = require("nativescript-secure-storage").SecureStorage;
+import { SecureStorage } from "nativescript-secure-storage";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 @Component({
   selector: "app-login",
-  moduleId: module.id,  
+  moduleId: module.id,
   templateUrl: "./login.component.html"
 })
 export class LoginComponent implements OnInit {
@@ -28,12 +28,25 @@ export class LoginComponent implements OnInit {
   constructor(private page: Page, private router: Router) {
     page.actionBarHidden = true;
     console.log(this.router.url);
-    
   }
 
   ngOnInit() {
-    //DELETE
-    //this.router.navigateByUrl("/home");
+    firebase.init({
+      onAuthStateChanged: (data) =>{
+        console.log(data.loggedIn ? "Logged in to firebase" : "Logged out from firebase");
+        if (data.loggedIn) {
+          console.log("user's email address: " + (data.user.email ? data.user.email : "N/A"));
+          this.router.navigateByUrl("/profile");        
+        }
+      }
+     }).then(
+      (instance) => {
+        console.log("firebase.init done");
+      },
+      (error) => {
+        console.log("firebase.init error: " + error);
+      }
+    );
   }
 
   resetPassword() {
@@ -59,7 +72,7 @@ export class LoginComponent implements OnInit {
           ranges: [
             {
               type: firebase.QueryRangeType.EQUAL_TO,
-              value: this.email
+              value: this.email.toLowerCase()
             }
           ]
         })
@@ -67,7 +80,7 @@ export class LoginComponent implements OnInit {
           for (var key in result.value) {
             firebase
               .resetPassword({
-                email: this.email
+                email: this.email.toLowerCase()
               })
               .then(
                 success => {
@@ -116,13 +129,25 @@ export class LoginComponent implements OnInit {
   seePassword() {
     let password: TextField = <TextField>this.page.getViewById("password");
     let passwordReg: TextField = <TextField>this.page.getViewById(
-      "passwordReg"
+      "passRegister"
     );
     password.secure = !password.secure;
     passwordReg.secure = !passwordReg.secure;
   }
 
   register() {
+    console.log(
+      "email:" +
+        this.emailRegister +
+        " pass:" +
+        this.passRegister +
+        " name:" +
+        this.nameRegister +
+        " lastname:" +
+        this.lastnameRegister +
+        " id:" +
+        this.id
+    );
     if (
       this.emailRegister == "" ||
       this.passRegister == "" ||
@@ -134,45 +159,98 @@ export class LoginComponent implements OnInit {
       this.valid = false;
     } else if (EmailValidator.validate(this.emailRegister)) {
       firebase
-        .login({
-          type: firebase.LoginType.PASSWORD,
-          passwordOptions: {
-            email: this.emailRegister,
-            password: this.passRegister
+        .query(this.onQueryEvent, "/users", {
+          singleEvent: true,
+          orderBy: {
+            type: firebase.QueryOrderByType.CHILD,
+            value: "email"
+          },
+          ranges: [
+            {
+              type: firebase.QueryRangeType.EQUAL_TO,
+              value: this.emailRegister
+            }
+          ]
+        })
+        .then(result => {
+          if (result.value == null) {
+            firebase
+              .createUser({
+                email: this.emailRegister.toLowerCase(),
+                password: this.passRegister
+              })
+              .then(
+                result => {
+                  firebase
+                    .push("/users", {
+                      email: this.emailRegister.toLowerCase(),
+                      id: this.id,
+                      lastname: this.lastnameRegister,
+                      name: this.nameRegister,
+                      points: 0,
+                      type: "client",
+                      image: "~/assets/productodefault.png"
+                    })
+                    .then(result => {
+                      console.log("created key: " + result.key);
+                      let secureStorage = new SecureStorage();
+                      secureStorage
+                        .set({
+                          key: "user",
+                          value: JSON.stringify({
+                            name:
+                              this.nameRegister + " " + this.lastnameRegister,
+                            email: this.emailRegister.toLowerCase(),
+                            image: "~/assets/productodefault.png"
+                          })
+                        })
+                        .then(function(success) {
+                          console.log("Successfully set a value? " + success);
+                        });
+                      this.router.navigateByUrl("/home");
+                    });
+                },
+                errorMessage => {
+                  firebase
+                    .push("/users", {
+                      email: this.emailRegister.toLowerCase(),
+                      id: this.id,
+                      lastname: this.lastnameRegister,
+                      name: this.nameRegister,
+                      points: 0,
+                      type: "client",
+                      image: "~/assets/productodefault.png"
+                    })
+                    .then(result => {
+                      console.log("created key: " + result.key);
+                      let secureStorage = new SecureStorage();
+                      secureStorage
+                        .set({
+                          key: "user",
+                          value: JSON.stringify({
+                            name:
+                              this.nameRegister + " " + this.lastnameRegister,
+                            email: this.emailRegister.toLowerCase(),
+                            image: "~/assets/productodefault.png"
+                          })
+                        })
+                        .then(function(success) {
+                          console.log("Successfully set a value? " + success);
+                        });
+                      this.router.navigateByUrl("/home");
+                    });
+                }
+              );
+          } else {
+            dialogs.alert({
+              title: "Algo anda mal!",
+              message:
+                "Ya existe una cuenta asociada a este correo electrónico",
+              okButtonText: "OK"
+            });
           }
         })
-        .then(
-          result => {
-            firebase
-              .push("/users", {
-                email: this.emailRegister,
-                id: this.id,
-                lastname: this.lastnameRegister,
-                name: this.nameRegister,
-                points: 0,
-                type: "client"
-              })
-              .then(result => {
-                console.log("created key: " + result.key);
-                var secureStorage = new SecureStorage();
-                secureStorage
-                  .set({
-                    key: "user",
-                    value: {
-                      name: this.nameRegister + " " + this.lastnameRegister,
-                      email: this.emailRegister
-                    }
-                  })
-                  .then(function(success) {
-                    console.log("Successfully set a value? " + success);
-                  });
-                this.router.navigateByUrl("/home");
-              });
-          },
-          errorMessage => {
-            console.log(errorMessage);
-          }
-        );
+        .catch(error => {});
     } else {
       this.valid = false;
       this.validText = "Direccion de correo invalida!";
@@ -190,50 +268,102 @@ export class LoginComponent implements OnInit {
         .login({
           type: firebase.LoginType.PASSWORD,
           passwordOptions: {
-            email: this.email,
+            email: this.email.toLowerCase(),
             password: this.pass
           }
         })
-        .then(
-          result => {
-            console.log("logged");
-            var secureStorage = new SecureStorage();
-            console.log("logged2");
-            secureStorage.set({
-              key: "user",
-              value: JSON.stringify({
-                name: result.name,
-                email: this.email,
-                image:result.profileImageURL
-              })
-            });
-            console.log("Successfully set a value");
-            this.router.navigateByUrl("/home");
-          },
-          errorMessage => {
-            console.log("Error:" + errorMessage);
-            if (
-              errorMessage ==
-              "There is no user record corresponding to this identifier. The user may have been deleted."
-            ) {
-              dialogs.alert({
-                title: "Algo anda mal!",
-                message: "El email ingresado es incorrecto",
-                okButtonText: "OK"
-              });
-            } else if (
-              errorMessage ==
-              "The password is invalid or the user does not have a password."
-            ) {
-              dialogs.alert({
-                title: "Algo anda mal!",
-                message:
-                  "La contraseña ingresada es incorrecta o el usuario no posee contraseña!",
-                okButtonText: "OK"
-              });
-            }
-          }
-        );
+        .then(resultLo => {
+          firebase
+            .query(this.onQueryEvent, "/users", {
+              singleEvent: true,
+              orderBy: {
+                type: firebase.QueryOrderByType.CHILD,
+                value: "email"
+              },
+              ranges: [
+                {
+                  type: firebase.QueryRangeType.EQUAL_TO,
+                  value: this.email.toLowerCase()
+                }
+              ]
+            })
+            .then(
+              result => {
+                if (result.value == null) {
+                  dialogs.alert({
+                    title: "Algo anda mal!",
+                    message: "No existe una cuenta asociada",
+                    okButtonText: "OK"
+                  });
+                } else {
+                  for (var key in result.value) {
+                    for (var key in result.value) {
+                      if (
+                        resultLo.profileImageURL &&
+                        result.value[key].image != resultLo.profileImageURL &&
+                        result.value[key].image ==
+                          "~/assets/productodefault.png"
+                      ) {
+                        var secureStorage = new SecureStorage();
+                        secureStorage
+                          .set({
+                            key: "user",
+                            value: JSON.stringify({
+                              name: result.value[key].name,
+                              email: result.value[key].email,
+                              image: resultLo.profileImageURL
+                            })
+                          })
+                          .then(function(success) {
+                            console.log("Successfully set a value? " + success);
+                          });
+                        this.router.navigateByUrl("/home");
+                      } else {
+                        console.log("Value: " + result.value[key].email);
+                        var secureStorage = new SecureStorage();
+                        secureStorage
+                          .set({
+                            key: "user",
+                            value: JSON.stringify({
+                              name: result.value[key].name,
+                              email: result.value[key].email,
+                              image: result.value[key].image
+                            })
+                          })
+                          .then(function(success) {
+                            console.log("Successfully set a value? " + success);
+                          });
+                        this.router.navigateByUrl("/home");
+                      }
+                    }
+                  }
+                }
+              },
+              errorMessage => {
+                console.log("Error:" + errorMessage);
+                if (
+                  errorMessage ==
+                  "There is no user record corresponding to this identifier. The user may have been deleted."
+                ) {
+                  dialogs.alert({
+                    title: "Algo anda mal!",
+                    message: "El email ingresado es incorrecto",
+                    okButtonText: "OK"
+                  });
+                } else if (
+                  errorMessage ==
+                  "The password is invalid or the user does not have a password."
+                ) {
+                  dialogs.alert({
+                    title: "Algo anda mal!",
+                    message:
+                      "La contraseña ingresada es incorrecta o el usuario no posee contraseña!",
+                    okButtonText: "OK"
+                  });
+                }
+              }
+            );
+        });
     } else {
       this.valid = false;
       this.validText = "Direccion de correo invalida!";
@@ -242,35 +372,75 @@ export class LoginComponent implements OnInit {
 
   fbLogin() {
     console.log("fb");
+    firebase.logout();
     firebase
       .login({
-        type: firebase.LoginType.FACEBOOK,
+        type: firebase.LoginType.FACEBOOK
         // Optional
-        facebookOptions: {
-          // defaults to ['public_profile', 'email']
-          scope: ["public_profile", "email"]
-        }
       })
-      .then(
-        result => {
-          console.log(JSON.stringify(result));
-          var secureStorage = new SecureStorage();
-          console.log("logged2");
-          secureStorage.set({
-            key: "user",
-            value: JSON.stringify({
-              name: result.name,
-              email: result.email,
-              image:result.profileImageURL
-            })
+      .then(resultFa => {
+        firebase
+          .query(this.onQueryEvent, "/users", {
+            singleEvent: true,
+            orderBy: {
+              type: firebase.QueryOrderByType.CHILD,
+              value: "email"
+            },
+            ranges: [
+              {
+                type: firebase.QueryRangeType.EQUAL_TO,
+                value: resultFa.email
+              }
+            ]
+          })
+          .then(result => {
+            if (result.value == null) {
+              dialogs.alert({
+                title: "Algo anda mal!",
+                message: "No existe una cuenta asociada",
+                okButtonText: "OK"
+              });
+            } else {
+              for (var key in result.value) {
+                if (
+                  resultFa.profileImageURL &&
+                  result.value[key].image != resultFa.profileImageURL &&
+                  result.value[key].image == "~/assets/productodefault.png"
+                ) {
+                  var secureStorage = new SecureStorage();
+                  secureStorage
+                    .set({
+                      key: "user",
+                      value: JSON.stringify({
+                        name: resultFa.name,
+                        email: resultFa.email,
+                        image: resultFa.profileImageURL
+                      })
+                    })
+                    .then(function(success) {
+                      console.log("Successfully set a value? " + success);
+                    });
+                  this.router.navigateByUrl("/home");
+                } else {
+                  var secureStorage = new SecureStorage();
+                  secureStorage
+                    .set({
+                      key: "user",
+                      value: JSON.stringify({
+                        name: resultFa.name,
+                        email: resultFa.email,
+                        image: result.value[key].image
+                      })
+                    })
+                    .then(function(success) {
+                      console.log("Successfully set a value? " + success);
+                    });
+                  this.router.navigateByUrl("/home");
+                }
+              }
+            }
           });
-          console.log("Successfully set a value");
-          this.router.navigateByUrl("/home");
-        },
-        errorMessage => {
-          console.log(errorMessage);
-        }
-      );
+      });
   }
 
   fbRegister() {
@@ -310,11 +480,11 @@ export class LoginComponent implements OnInit {
                 secureStorage
                   .set({
                     key: "user",
-                    value: {
-                      name: result.name,
-                      email: result.email,
-                      image:result.profileImageURL
-                    }
+                    value: JSON.stringify({
+                      name: result.value[key].name,
+                      email: result.value[key].email,
+                      image: result.value[key].image
+                    })
                   })
                   .then(function(success) {
                     console.log("Successfully set a value? " + success);
@@ -343,27 +513,72 @@ export class LoginComponent implements OnInit {
         type: firebase.LoginType.GOOGLE
         // Optional
       })
-      .then(
-        result => {
-          JSON.stringify(result);
-          console.log(result);
-          var secureStorage = new SecureStorage();
-          console.log("logged2");
-          secureStorage.set({
-            key: "user",
-            value: JSON.stringify({
-              name: result.name,
-              email: result.email,
-              image:result.profileImageURL
-            })
+      .then(resultGo => {
+        firebase
+          .query(this.onQueryEvent, "/users", {
+            singleEvent: true,
+            orderBy: {
+              type: firebase.QueryOrderByType.CHILD,
+              value: "email"
+            },
+            ranges: [
+              {
+                type: firebase.QueryRangeType.EQUAL_TO,
+                value: resultGo.email
+              }
+            ]
+          })
+          .then(result => {
+            if (result.value == null) {
+              dialogs.alert({
+                title: "Algo anda mal!",
+                message: "No existe una cuenta asociada",
+                okButtonText: "OK"
+              });
+            } else {
+              for (var key in result.value) {
+                for (var key in result.value) {
+                  if (
+                    resultGo.profileImageURL &&
+                    result.value[key].image != resultGo.profileImageURL &&
+                    result.value[key].image == "~/assets/productodefault.png"
+                  ) {
+                    var secureStorage = new SecureStorage();
+                    secureStorage
+                      .set({
+                        key: "user",
+                        value: JSON.stringify({
+                          name: resultGo.name,
+                          email: resultGo.email,
+                          image: resultGo.profileImageURL
+                        })
+                      })
+                      .then(function(success) {
+                        console.log("Successfully set a value? " + success);
+                      });
+                    this.router.navigateByUrl("/home");
+                  } else{
+                 console.log("Value: " + result.value[key].email);
+                  var secureStorage = new SecureStorage();
+                  secureStorage
+                    .set({
+                      key: "user",
+                      value: JSON.stringify({
+                        name: result.value[key].name,
+                        email: result.value[key].email,
+                        image: result.value[key].image
+                      })
+                    })
+                    .then(function(success) {
+                      console.log("Successfully set a value? " + success);
+                    });
+                  this.router.navigateByUrl("/home");
+                }
+              }
+            }
+            }
           });
-          console.log("Successfully set a value");
-          this.router.navigateByUrl("/home");
-        },
-        errorMessage => {
-          console.log(errorMessage);
-        }
-      );
+      });
   }
 
   onQueryEvent(result) {
@@ -406,11 +621,11 @@ export class LoginComponent implements OnInit {
                 secureStorage
                   .set({
                     key: "user",
-                    value: {
-                      name: result.name,
-                      email: result.email,
-                      image:result.profileImageURL
-                    }
+                    value: JSON.stringify({
+                      name: result.value[key].name,
+                      email: result.value[key].email,
+                      image: result.value[key].image
+                    })
                   })
                   .then(function(success) {
                     console.log("Successfully set a value? " + success);

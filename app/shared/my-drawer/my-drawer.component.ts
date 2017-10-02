@@ -42,7 +42,7 @@ export class MyDrawerComponent implements OnInit {
   ngOnInit(): void {
     this._navigationItems = [
       {
-        title: "Home",
+        title: "Inicio",
         name: "home",
         route: "/home",
         icon: "\uf015"

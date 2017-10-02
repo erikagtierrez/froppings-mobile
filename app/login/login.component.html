@@ -1,7 +1,7 @@
 <StackLayout class="bgHeader status-b">
-    <StackLayout verticalAlignment="center" height="92%" margin="30 10">
+    <StackLayout verticalAlignment="center" height="93%" margin="30 10">
         <StackLayout visibility="{{!isRegistration ? 'visible' : 'collapse'}}">
-            <CardView class="cardStyle" margin="70 20" elevation="50" radius="1">
+            <CardView class="cardStyle" height="80%" width="95%" verticalAlignment="center" elevation="50" radius="1">
                 <StackLayout class="form">
                     <Image src="~/assets/froppings.png" class="imgLogo" stretch="aspectFit"></Image>
                     <TextField class="text-field" hint="Correo Electronico" [(ngModel)]="email" autocapitalizationType="none" keyboardType="email"
@@ -24,16 +24,16 @@
             </CardView>
         </StackLayout>
         <StackLayout visibility="{{isRegistration ? 'visible' : 'collapse'}}">
-            <CardView class="cardStyle" margin="30 20" elevation="50" radius="1" height="92%">
+            <CardView class="cardStyle" elevation="50" radius="1" height="95%" width="95%" verticalAlignment="center">
                 <StackLayout class="form">
                     <Image src="~/assets/froppings.png" class="imgLogo" stretch="aspectFit"></Image>
-                    <TextField class="text-field" hint="Nombre" [(ngModel)]="nameRegister" autocapitalizationType="none" required></TextField>
-                    <TextField class="text-field" hint="Apellido" [(ngModel)]="lastnameRegister" autocapitalizationType="none" required></TextField>
+                    <TextField class="text-field" hint="Nombre" [(ngModel)]="nameRegister"  required></TextField>
+                    <TextField class="text-field" hint="Apellido" [(ngModel)]="lastnameRegister"  required></TextField>
                     <TextField class="text-field" hint="Cedula" [(ngModel)]="id" autocapitalizationType="none" keyboardType="number" required></TextField>
                     <TextField class="text-field" hint="Correo Electronico" [(ngModel)]="emailRegister" autocapitalizationType="none" keyboardType="email"
                         required></TextField>
                     <StackLayout orientation="horizontal" horizontalAlignment="center" margin="0 17">
-                        <TextField class="text-field" hint="Contraseña" id="passwordReg" secure="true" [(ngModel)]="passRegister" autocapitalizationType="none"
+                        <TextField class="text-field" hint="Contraseña" id="passRegister" secure="true" [(ngModel)]="passRegister" autocapitalizationType="none"
                             required></TextField>
                         <Label class="fa socialButton" (tap)="seePassword()" [text]="'\uf06e'"></Label>
                     </StackLayout>
