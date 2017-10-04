@@ -31,22 +31,31 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    firebase.init({
-      onAuthStateChanged: (data) =>{
-        console.log(data.loggedIn ? "Logged in to firebase" : "Logged out from firebase");
-        if (data.loggedIn) {
-          console.log("user's email address: " + (data.user.email ? data.user.email : "N/A"));
-          this.router.navigateByUrl("/profile");        
+     firebase
+      .init({
+        onAuthStateChanged: data => {
+          console.log(
+            data.loggedIn ? "Logged in to firebase" : "Logged out from firebase"
+          );
+          if (data.loggedIn) {
+            console.log(
+              "user's email address: " +
+                (data.user.email ? data.user.email : "N/A")
+            );
+            //this.router.navigateByUrl("/profile");
+          }
         }
-      }
-     }).then(
-      (instance) => {
-        console.log("firebase.init done");
-      },
-      (error) => {
-        console.log("firebase.init error: " + error);
-      }
-    );
+      })
+      .then(
+        instance => {
+          console.log("firebase.init done");
+        },
+        error => {
+          //BORRAR
+          this.router.navigateByUrl("/profile");
+          console.log("firebase.init error: " + error);
+        }
+      ); 
   }
 
   resetPassword() {
@@ -201,7 +210,8 @@ export class LoginComponent implements OnInit {
                             name:
                               this.nameRegister + " " + this.lastnameRegister,
                             email: this.emailRegister.toLowerCase(),
-                            image: "~/assets/productodefault.png"
+                            image: "~/assets/productodefault.png",
+                            key: result.key
                           })
                         })
                         .then(function(success) {
@@ -231,7 +241,8 @@ export class LoginComponent implements OnInit {
                             name:
                               this.nameRegister + " " + this.lastnameRegister,
                             email: this.emailRegister.toLowerCase(),
-                            image: "~/assets/productodefault.png"
+                            image: "~/assets/productodefault.png",
+                            key: result.key
                           })
                         })
                         .then(function(success) {
@@ -311,7 +322,8 @@ export class LoginComponent implements OnInit {
                             value: JSON.stringify({
                               name: result.value[key].name,
                               email: result.value[key].email,
-                              image: resultLo.profileImageURL
+                              image: resultLo.profileImageURL,
+                              key: result.key
                             })
                           })
                           .then(function(success) {
@@ -327,7 +339,8 @@ export class LoginComponent implements OnInit {
                             value: JSON.stringify({
                               name: result.value[key].name,
                               email: result.value[key].email,
-                              image: result.value[key].image
+                              image: result.value[key].image,
+                              key: result.key
                             })
                           })
                           .then(function(success) {
@@ -439,6 +452,8 @@ export class LoginComponent implements OnInit {
                 }
               }
             }
+          }).catch(err=>{
+            console.log(err);
           });
       });
   }
@@ -483,7 +498,8 @@ export class LoginComponent implements OnInit {
                     value: JSON.stringify({
                       name: result.value[key].name,
                       email: result.value[key].email,
-                      image: result.value[key].image
+                      image: result.value[key].image,
+                      key: result.key
                     })
                   })
                   .then(function(success) {
@@ -537,28 +553,28 @@ export class LoginComponent implements OnInit {
               });
             } else {
               for (var key in result.value) {
-                for (var key in result.value) {
-                  if (
-                    resultGo.profileImageURL &&
-                    result.value[key].image != resultGo.profileImageURL &&
-                    result.value[key].image == "~/assets/productodefault.png"
-                  ) {
-                    var secureStorage = new SecureStorage();
-                    secureStorage
-                      .set({
-                        key: "user",
-                        value: JSON.stringify({
-                          name: resultGo.name,
-                          email: resultGo.email,
-                          image: resultGo.profileImageURL
-                        })
+                if (
+                  resultGo.profileImageURL &&
+                  result.value[key].image != resultGo.profileImageURL &&
+                  result.value[key].image == "~/assets/productodefault.png"
+                ) {
+                  var secureStorage = new SecureStorage();
+                  secureStorage
+                    .set({
+                      key: "user",
+                      value: JSON.stringify({
+                        name: resultGo.name,
+                        email: resultGo.email,
+                        image: resultGo.profileImageURL,
+                        key: result.key
                       })
-                      .then(function(success) {
-                        console.log("Successfully set a value? " + success);
-                      });
-                    this.router.navigateByUrl("/home");
-                  } else{
-                 console.log("Value: " + result.value[key].email);
+                    })
+                    .then(function(success) {
+                      console.log("Successfully set a value? " + success);
+                    });
+                  this.router.navigateByUrl("/home");
+                } else {
+                  console.log("Value: " + result.value[key].email);
                   var secureStorage = new SecureStorage();
                   secureStorage
                     .set({
@@ -566,7 +582,8 @@ export class LoginComponent implements OnInit {
                       value: JSON.stringify({
                         name: result.value[key].name,
                         email: result.value[key].email,
-                        image: result.value[key].image
+                        image: result.value[key].image,
+                        key: result.key
                       })
                     })
                     .then(function(success) {
@@ -575,7 +592,6 @@ export class LoginComponent implements OnInit {
                   this.router.navigateByUrl("/home");
                 }
               }
-            }
             }
           });
       });
@@ -624,7 +640,8 @@ export class LoginComponent implements OnInit {
                     value: JSON.stringify({
                       name: result.value[key].name,
                       email: result.value[key].email,
-                      image: result.value[key].image
+                      image: result.value[key].image,
+                      key: result.key
                     })
                   })
                   .then(function(success) {
