@@ -126,6 +126,10 @@ Page {
   background-color: $accent-light;
 }
 
+.text-black{
+  color:black;
+}
+
 .promoContent {
   background-color: rgba(41, 33, 29, 0.76);
 }
@@ -161,9 +165,9 @@ Page {
 }
 
 .messagePost {
-  background-color: #810d43;
+  background-color: #aa076b;
   border-radius: 10;
-  box-shadow: 10px 10px 5px grey;
+  padding: 10;
 }
 
 .imagePost {
@@ -172,6 +176,19 @@ Page {
 
 .textCaption {
   font-weight: bold;
+  font-size: 18;
+}
+
+.textDescription{
+  font-size: 16;
+}
+
+.smallF{
+  font-size: 14;
+  padding: 5;
+}
+.brownbg{
+  background-color: #342B28;
 }
 
 .underline-link {

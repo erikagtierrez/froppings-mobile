@@ -6,7 +6,7 @@ import firebase = require("nativescript-plugin-firebase");
 import { Router } from "@angular/router";
 import {ListView} from "ui/list-view";
 import { Observable as RxObservable } from "rxjs/Observable";
-var nativescriptGradient = require("nativescript-gradient")
+
 
 export class Feautured {
     constructor(

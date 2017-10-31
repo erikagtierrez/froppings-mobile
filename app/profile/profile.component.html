@@ -20,39 +20,39 @@
                         </StackLayout>
                         <StackLayout dock="right" verticalAlignment="center" width="600%">
                             <StackLayout class="form">
-                                <TextField class="text-field profileInput" hint="Nombre" [(ngModel)]="name" required></TextField>
-                                <TextField class="text-field profileInput" hint="Apellido" [(ngModel)]="lastname" required></TextField>
+                                <TextField class="text-field smallF profileInput" hint="Nombre" [(ngModel)]="name" required></TextField>
+                                <TextField class="text-field smallF profileInput" hint="Apellido" [(ngModel)]="lastname" required></TextField>
                             </StackLayout>
                         </StackLayout>
                     </DockLayout>
                 </StackLayout>
                 <StackLayout class="form">
-                    <TextField class="text-field profileInput" hint="Cedula" [(ngModel)]="id" autocapitalizationType="none" keyboardType="number"
+                    <TextField class="text-field profileInput smallF" hint="Cedula" [(ngModel)]="id" autocapitalizationType="none" keyboardType="number"
                         required></TextField>
-                    <TextField class="text-field profileInput" hint="Correo Electronico" [(ngModel)]="email" autocapitalizationType="none" disabled
+                    <TextField class="text-field profileInput smallF" hint="Correo Electronico" [(ngModel)]="email" autocapitalizationType="none" disabled
                         keyboardType="email"></TextField>
                 </StackLayout>
-                <Gradient direction="to right" colors="#aa076b,#61045f" orientation="horizontal" borderRadius="10" width="60%" horizontalAlignment="center">
+                <Label text="Cambiar contraseña" textWrap="true" padding="5 25 5 35" class="underline-link" (tap)="changingPassword=!changingPassword"></Label>
+                <StackLayout>
+                    <StackLayout orientation="horizontal" horizontalAlignment="center" margin="5 20">
+                        <TextField class="text-field profileInput smallF" hint="Contraseña actual" id="currentPass" secure="true" [(ngModel)]="currentPass"
+                            autocapitalizationType="none" required></TextField>
+                        <Label class="fa socialButton"  horizontalAlignment="center" verticalAlignment="center" (tap)="seePassword()" [text]="'\uf06e'"></Label>
+                    </StackLayout>
+                    <StackLayout orientation="horizontal" horizontalAlignment="center" margin="0 20">
+                        <TextField class="text-field profileInput smallF" hint="Nueva contraseña" id="newPass" secure="true" [(ngModel)]="newPass"
+                            autocapitalizationType="none" required></TextField>
+                        <Label class="fa socialButton"  horizontalAlignment="center" verticalAlignment="center" (tap)="seePassword()" [text]="'\uf06e'"></Label>
+                    </StackLayout>
+                    <StackLayout>
+                        <Button text="Cambiar" padding="0" height="30" margin="5 30 5 30" width="40%" (tap)="changePassword()" horizontalAlignment="right" (tap)="saveProfile()" borderRadius="10"></Button>
+                    </StackLayout>
+                </StackLayout>
+                <Gradient direction="to right" margin="10 0" colors="#aa076b,#61045f" orientation="horizontal" borderRadius="10" width="60%" horizontalAlignment="center">
                     <Label class="text-center text-white" text="1200 PUNTOS" padding="5 0" margin="5 20"></Label>
                 </Gradient>
                 <StackLayout>
                     <Button text="Guardar cambios" padding="10 0" margin="10 30 5 30" (tap)="saveProfile()" borderRadius="10"></Button>
-                </StackLayout>
-                <Label text="Cambiar contraseña" textWrap="true" class="underline-link" padding="5 25 5 25" (tap)="changingPassword=!changingPassword"></Label>
-                <StackLayout *ngIf="changingPassword">
-                    <StackLayout orientation="horizontal" horizontalAlignment="center" margin="5 20">
-                        <TextField class="text-field profileInput" hint="Contraseña actual" id="passRegister" secure="true" [(ngModel)]="currentPass"
-                            autocapitalizationType="none" required></TextField>
-                        <Label class="fa socialButton" (tap)="seePassword()" [text]="'\uf06e'"></Label>
-                    </StackLayout>
-                    <StackLayout orientation="horizontal" horizontalAlignment="center" margin="0 20">
-                        <TextField class="text-field profileInput" hint="Nueva contraseña" id="passRegister" secure="true" [(ngModel)]="newPass"
-                            autocapitalizationType="none" required></TextField>
-                        <Label class="fa socialButton" (tap)="seePassword()" [text]="'\uf06e'"></Label>
-                    </StackLayout>
-                    <StackLayout>
-                        <Button text="Cambiar" padding="10 0" margin="5 30 5 30" width="40%" (tap)="changePassword()" horizontalAlignment="right" (tap)="saveProfile()" borderRadius="10"></Button>
-                    </StackLayout>
                 </StackLayout>
             </StackLayout>
         </CardView>

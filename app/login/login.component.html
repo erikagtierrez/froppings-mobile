@@ -4,20 +4,20 @@
             <CardView class="cardStyle" height="80%" width="95%" verticalAlignment="center" elevation="50" radius="1">
                 <StackLayout class="form">
                     <Image src="~/assets/froppings.png" class="imgLogo" stretch="aspectFit"></Image>
-                    <TextField class="text-field" hint="Correo Electronico" [(ngModel)]="email" autocapitalizationType="none" keyboardType="email"
+                    <TextField class="text-field smallF" hint="Correo Electronico" [(ngModel)]="email" autocapitalizationType="none" keyboardType="email"
                         required></TextField>
                     <label class="label text-center" *ngIf="!valid" [text]="validText"></label>
-                    <StackLayout orientation="horizontal" horizontalAlignment="center" margin="0 15">
-                        <TextField class="text-field" hint="Contraseña" id="password" secure="true" [(ngModel)]="pass" autocapitalizationType="none"
+                    <StackLayout orientation="horizontal" horizontalAlignment="center" class="passfield" margin="0 10">
+                        <TextField class="text-field smallF" hint="Contraseña" id="password" secure="true" [(ngModel)]="pass" autocapitalizationType="none"
                             required></TextField>
-                        <Label class="fa socialButton" (tap)="seePassword()" [text]="'\uf06e'"></Label>
+                        <Label class="fa socialButton" (tap)="seePassword()" verticalAlignment="center" [text]="'\uf06e'"></Label>
                     </StackLayout>
                     <label class="label text-center" (tap)="resetPassword()" text="¿Olvidaste tu contraseña?"></label>
-                    <Button text="Iniciar sesión" (tap)="login()"></Button>
+                    <Button text="Iniciar sesión" margin="5 25" (tap)="login()"></Button>
                     <label class="label text-center" text="Conecta con:"></label>
                     <StackLayout orientation="horizontal" horizontalAlignment="center">
-                        <Button [text]="'\uf09a'" class="fa socialButton" (tap)="fbLogin()"></Button>
-                        <Button [text]="'\uf1a0'" class="fa socialButton" (tap)="googleLogin()"></Button>
+                        <Button [text]="'\uf09a'" width="50" class="fa socialButton" (tap)="fbLogin()"></Button>
+                        <Button [text]="'\uf1a0'" width="50" class="fa socialButton" (tap)="googleLogin()"></Button>
                     </StackLayout>
                     <label class="label text-center" (tap)="isRegistration=!isRegistration" text="¿No estás registrado?"></label>
                 </StackLayout>
@@ -27,22 +27,22 @@
             <CardView class="cardStyle" elevation="50" radius="1" height="95%" width="95%" verticalAlignment="center">
                 <StackLayout class="form">
                     <Image src="~/assets/froppings.png" class="imgLogo" stretch="aspectFit"></Image>
-                    <TextField class="text-field" hint="Nombre" [(ngModel)]="nameRegister"  required></TextField>
-                    <TextField class="text-field" hint="Apellido" [(ngModel)]="lastnameRegister"  required></TextField>
-                    <TextField class="text-field" hint="Cedula" [(ngModel)]="id" autocapitalizationType="none" keyboardType="number" required></TextField>
-                    <TextField class="text-field" hint="Correo Electronico" [(ngModel)]="emailRegister" autocapitalizationType="none" keyboardType="email"
+                    <TextField class="text-field smallF" hint="Nombre" [(ngModel)]="nameRegister"  required></TextField>
+                    <TextField class="text-field smallF" hint="Apellido" [(ngModel)]="lastnameRegister"  required></TextField>
+                    <TextField class="text-field smallF" hint="Cedula" [(ngModel)]="id" autocapitalizationType="none" keyboardType="number" required></TextField>
+                    <TextField class="text-field smallF" hint="Correo Electronico" [(ngModel)]="emailRegister" autocapitalizationType="none" keyboardType="email"
                         required></TextField>
-                    <StackLayout orientation="horizontal" horizontalAlignment="center" margin="0 17">
-                        <TextField class="text-field" hint="Contraseña" id="passRegister" secure="true" [(ngModel)]="passRegister" autocapitalizationType="none"
+                    <StackLayout orientation="horizontal" horizontalAlignment="center" margin="0 10">
+                        <TextField class="text-field smallF" hint="Contraseña" id="passRegister" secure="true" [(ngModel)]="passRegister" autocapitalizationType="none"
                             required></TextField>
-                        <Label class="fa socialButton" (tap)="seePassword()" [text]="'\uf06e'"></Label>
+                        <Label class="fa socialButton" (tap)="seePassword()" verticalAlignment="center" [text]="'\uf06e'"></Label>
                     </StackLayout>
                     <label class="label text-center" *ngIf="!valid" [text]="validText"></label>
-                    <Button text="Registrate" (tap)="register()"></Button>
+                    <Button text="Registrate" margin="5 25" (tap)="register()"></Button>
                     <label class="label text-center" text="Conecta con:"></label>
                     <StackLayout orientation="horizontal" horizontalAlignment="center">
-                        <Button [text]="'\uf09a'" class="fa socialButton" (tap)="fbRegister()"></Button>
-                        <Button [text]="'\uf1a0'" class="fa socialButton" (tap)="googleRegister()"></Button>
+                        <Button [text]="'\uf09a'" width="50" class="fa socialButton" (tap)="fbRegister()"></Button>
+                        <Button [text]="'\uf1a0'" width="50" class="fa socialButton" (tap)="googleRegister()"></Button>
                     </StackLayout>
                     <StackLayout (tap)="isRegistration=!isRegistration">
                         <label class="label text-center" text="¿Estás registrado?"></label>

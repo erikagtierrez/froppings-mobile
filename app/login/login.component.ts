@@ -7,6 +7,10 @@ import { Router } from "@angular/router";
 import * as dialogs from "ui/dialogs";
 import { SecureStorage } from "nativescript-secure-storage";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import * as elementRegistryModule from 'nativescript-angular/element-registry';
+elementRegistryModule.registerElement("CardView", () => require("nativescript-cardview").CardView);
+import { registerElement } from "nativescript-angular";
+registerElement("Gradient", () => require("nativescript-gradient").Gradient);
 
 @Component({
   selector: "app-login",
@@ -42,7 +46,7 @@ export class LoginComponent implements OnInit {
               "user's email address: " +
                 (data.user.email ? data.user.email : "N/A")
             );
-            //this.router.navigateByUrl("/profile");
+            this.router.navigateByUrl("/profile");
           }
         }
       })
@@ -52,7 +56,7 @@ export class LoginComponent implements OnInit {
         },
         error => {
           //BORRAR
-          this.router.navigateByUrl("/profile");
+          //this.router.navigateByUrl("/profile");
           console.log("firebase.init error: " + error);
         }
       ); 
