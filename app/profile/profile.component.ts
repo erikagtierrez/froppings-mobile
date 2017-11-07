@@ -10,6 +10,7 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { Border } from "tns-core-modules/ui/border";
 import { SecureStorage } from "nativescript-secure-storage";
 import * as dialogs from "ui/dialogs";
+import * as imagepicker from "nativescript-imagepicker";
 
 @Component({
   selector: "Profile",
@@ -43,6 +44,7 @@ export class ProfileComponent implements OnInit {
     secureStorage.get({ key: "user" }).then(value => {
       this.image = JSON.parse(value).image;
       this.key = JSON.parse(value).key;
+      console.log(this.key);
     });
     console.log(this.image);
     firebase.getCurrentUser().then(resultPro => {
@@ -63,20 +65,22 @@ export class ProfileComponent implements OnInit {
         .then(result => {
           for (var key in result.value) {
             this.name = result.value[key].name;
-              this.lastname = result.value[key].lastname;
-              this.email = result.value[key].email;
-              this.id = result.value[key].id;
-              this.points=result.value[key].points;
+            this.lastname = result.value[key].lastname;
+            this.email = result.value[key].email;
+            this.id = result.value[key].id;
+            this.points = result.value[key].points;
+            this.image = result.value[key].image;
           }
+          this.key=result.key;
+          console.log("eky"+this.key);
         });
     });
   }
 
   saveProfile() {
     console.log("USER" + this.name);
-    let path = "/users/" + this.key;
     firebase
-      .update(path, {
+      .update("/users/"+this.key, {
         email: this.email,
         id: this.id,
         image: this.image,
@@ -101,7 +105,7 @@ export class ProfileComponent implements OnInit {
           newPassword: this.newPass
         })
         .then(
-          success =>{
+          success => {
             dialogs.alert({
               title: "Listo!",
               message: "Cambio de contraseña exitoso",
@@ -118,6 +122,26 @@ export class ProfileComponent implements OnInit {
           }
         );
     }
+  }
+
+  changePicture() {
+    let context = imagepicker.create({
+      mode: "single" // use "multiple" for multiple selection
+    });
+    context
+    .authorize()
+    .then(function() {
+        return context.present();
+    })
+    .then((selection)=> {
+        selection.forEach((selected) =>{
+            // process the selected image
+            this.image=selected.getImageData.toString();
+            console.log(selected.getImageData.toString());
+        });
+    }).catch(function (e) {
+        // process error
+    });
   }
 
   get sideDrawerTransition(): DrawerTransitionBase {

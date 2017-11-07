@@ -42,11 +42,11 @@ export class LoginComponent implements OnInit {
             data.loggedIn ? "Logged in to firebase" : "Logged out from firebase"
           );
           if (data.loggedIn) {
+            this.router.navigateByUrl("/home");            
             console.log(
               "user's email address: " +
                 (data.user.email ? data.user.email : "N/A")
             );
-            this.router.navigateByUrl("/profile");
           }
         }
       })

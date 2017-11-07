@@ -13,7 +13,7 @@
             <ng-template let-item="item" let-i="index">
                 <StackLayout>
                     <!-- Promotions -->
-                    <StackLayout margin="5 8 5 8" class="promo" *ngIf="item.type=='promo'">
+                    <StackLayout margin="5 8 2 8" class="promo" *ngIf="item.type=='promo'">
                         <Gradient direction="to right" borderRadius="10" colors="#42275a,#734b6d" orientation="horizontal" width="100%" padding="0 0 10 0" >
                             <StackLayout>
                                 <StackLayout orientation="horizontal" width="100%" margin="0 0 0 0" horizontalAlignment="center">
@@ -87,7 +87,7 @@
                     </StackLayout>
                     <!-- Message Post -->
                     <StackLayout margin="2 5 2 5">
-                        <CardView class="messagePost" elevation="15"  radius="5" margin="2 5 5 5" *ngIf="item.type=='message'">
+                        <CardView class="messagePost" elevation="15"  radius="5" margin="0 5 5 5" *ngIf="item.type=='message'">
                             <StackLayout>
                                 <StackLayout>
                                         <Label [text]="item.name" class="wrap text-white textCaption" margin="10 0 10 10"></Label>                                        
